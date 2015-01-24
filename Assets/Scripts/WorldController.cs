@@ -5,8 +5,12 @@ public class WorldController : MonoBehaviour {
 
 	public PlayerMovement player1;
 	public PlayerMovement player2;
+	
+	public static float floorAccel = 0;
+	public static int playersCountTouchingRightWall = 0;
+	private bool moveFloor = false;
 
-	public static float playerSpeed = 0.5f;
+	public static float playerSpeed = 0.1f;
 	public static int playersMaxDistance = 5;
 	public static int borderDistance = 10;
 		
@@ -58,47 +62,38 @@ public class WorldController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		PlayerMovement mov1 = player1.GetComponent<PlayerMovement> ();
+		PlayerMovement mov2 = player2.GetComponent<PlayerMovement> ();
+		
+		moveFloor = (mov1.accel > 0 && mov1.touchingRightWall) || (mov2.accel > 0 && mov2.touchingRightWall);
+
 		if (Input.GetKeyDown("left")) {
-			if (player1.gameObject.transform.position.x > -borderDistance) {
-				player1.MoveX(-playerSpeed);
-			}
-		} else if (Input.GetKeyDown("right")) {
-			if (player1.gameObject.transform.position.x < borderDistance) {
-				player1.MoveX(playerSpeed);
-			} else if(CanMoveRight()) {
-				MoveFloor(2);
-			}
+			player1.accel = -playerSpeed;
+		} else if (Input.GetKeyDown("right") && !moveFloor) {
+			player1.accel = playerSpeed;
+		} else if (Input.GetKeyUp("left") || Input.GetKeyUp("right")) {
+			player1.accel = 0;
 		}
 
 		if (Input.GetKeyDown("a")) {
-			if (player2.gameObject.transform.position.x > -borderDistance) {
-				player2.MoveX(-playerSpeed);
-			}
-		} else if (Input.GetKeyDown("d")) {
-			if (player2.gameObject.transform.position.x < borderDistance) {
-				player2.MoveX(playerSpeed);
-			} else if(CanMoveRight()) {	
-				MoveFloor(1);
-			}
+			player2.accel = -playerSpeed;
+		} else if (Input.GetKeyDown("d") && !moveFloor) {
+			player2.accel = playerSpeed;
+		} else if (Input.GetKeyUp("a") || Input.GetKeyUp("d")) {
+			player2.accel = 0;
+		}
+	
+		if (moveFloor && !((mov1.touchingLeftWall && mov2.touchingRightWall) || (mov1.touchingRightWall && mov2.touchingLeftWall))) {
+			floorAccel = playerSpeed;
+			MoveFloors(1);
+			MoveFloors(2);
+		} else {
+			floorAccel = 0;
 		}
 	}
 
 	private bool CanMoveRight() {
-		return Mathf.Abs (player1.transform.position.x - player2.transform.position.x) < borderDistance;
-	}
-	
-	private void MoveFloor(int level) {
-		MoveFloors (1);
-		MoveFloors (2);
-
-		if (level == 1) {
-			player1.MoveX(-playerSpeed);
-		} else {
-			player2.MoveX(-playerSpeed);
-		}
-
-		DestroyFloorsOutside (1);
-		DestroyFloorsOutside (2);
+		return Mathf.Abs (player1.transform.position.x - player2.transform.position.x) < playersMaxDistance;
 	}
 	
 	private void MoveFloors(int level){
@@ -106,16 +101,9 @@ public class WorldController : MonoBehaviour {
 		foreach(GameObject floorObject in floorObjects) {
 			if (floorObject) {
 				Vector2 pos = floorObject.transform.position;
-				pos.x -= playerSpeed;
+				pos.x -= floorAccel;
 				floorObject.transform.position = pos;
-			}
-		}
-	}
 
-	private void DestroyFloorsOutside(int level){
-		ArrayList floorObjects = FloorObjectsForLevel(level);
-		foreach (GameObject floorObject in floorObjects) {
-			if (floorObject) {
 				Floor floor = floorObject.GetComponent<Floor>();
 				if (floor.IsOutside()) {
 					floorObjectsToDestroy.Add(floorObject);
