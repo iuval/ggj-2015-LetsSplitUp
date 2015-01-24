@@ -244,12 +244,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1321096071}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b69cde2a74c404cb4b62edb3e768212a, type: 3}
+  m_Script: {fileID: 11500000, guid: 6fb7f30502fde47bc9fc14bc35ea901a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canHitHard: 0
+  canJumpHigh: 0
   accel: 0
   touchingRightWall: 0
   touchingLeftWall: 0
+  wantsToChange: 0
 --- !u!1 &1691644517
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,6 +298,8 @@ MonoBehaviour:
   player2: {fileID: 2132230092}
   floor: {fileID: 100002, guid: 29346a53d13e44f76b961ae00ca4c3bb, type: 2}
   traps: []
+  channelingTimeLimit: 1
+  channelingTime: 0
 --- !u!1 &1745463887
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,12 +528,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2132230090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b69cde2a74c404cb4b62edb3e768212a, type: 3}
+  m_Script: {fileID: 11500000, guid: 6fb7f30502fde47bc9fc14bc35ea901a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canHitHard: 0
+  canJumpHigh: 0
   accel: 0
   touchingRightWall: 0
   touchingLeftWall: 0
+  wantsToChange: 0
 --- !u!50 &2132230093
 Rigidbody2D:
   m_ObjectHideFlags: 0

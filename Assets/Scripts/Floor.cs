@@ -13,7 +13,7 @@ public class Floor : MonoBehaviour {
 			if (t.name == "Wall") wall = t.gameObject;
 		}
 		spikes.SetActive (false);
-//		wall.SetActive (false);
+		wall.SetActive (false);
 	}
 	
 	// Update is called once per frame

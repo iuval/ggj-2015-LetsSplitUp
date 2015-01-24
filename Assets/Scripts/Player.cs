@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMovement : MonoBehaviour {
+public class Player : MonoBehaviour {
+
+	public bool canHitHard = false;
+	public bool canJumpHigh = false;
 
 	public float accel = 0;
 	public bool touchingRightWall = false;
 	public bool touchingLeftWall = false;
+
+	public bool wantsToChange = false;
 
 	// Use this for initialization
 	void Start () {

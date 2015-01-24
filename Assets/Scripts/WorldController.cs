@@ -3,8 +3,8 @@ using System.Collections;
 
 public class WorldController : MonoBehaviour {
 
-	public PlayerMovement player1;
-	public PlayerMovement player2;
+	public Player player1;
+	public Player player2;
 	
 	public static float floorAccel = 0;
 	public static int playersCountTouchingRightWall = 0;
@@ -21,8 +21,14 @@ public class WorldController : MonoBehaviour {
 	public ArrayList floor2Objects;
 	
 	public ArrayList floorObjectsToDestroy;
+	
+	public float channelingTimeLimit = 1.0f;
+	public float channelingTime = 0.0f;
 
 	void Start () {
+		player1.canHitHard = true;
+		player2.canJumpHigh = true;
+
 		floor1Objects = new ArrayList();
 		floor2Objects = new ArrayList();
 		floorObjectsToDestroy = new ArrayList();
@@ -62,11 +68,14 @@ public class WorldController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		PlayerMovement mov1 = player1.GetComponent<PlayerMovement> ();
-		PlayerMovement mov2 = player2.GetComponent<PlayerMovement> ();
-		
-		moveFloor = (mov1.accel > 0 && mov1.touchingRightWall) || (mov2.accel > 0 && mov2.touchingRightWall);
+		CheckForMovement ();
 
+		CheckForAbilityUse ();
+	}
+
+	private void CheckForMovement() {
+		moveFloor = (player1.accel > 0 && player1.touchingRightWall) || (player2.accel > 0 && player2.touchingRightWall);
+		
 		if (Input.GetKeyDown("left")) {
 			player1.accel = -playerSpeed;
 		} else if (Input.GetKeyDown("right") && !moveFloor) {
@@ -74,7 +83,7 @@ public class WorldController : MonoBehaviour {
 		} else if (Input.GetKeyUp("left") || Input.GetKeyUp("right")) {
 			player1.accel = 0;
 		}
-
+		
 		if (Input.GetKeyDown("a")) {
 			player2.accel = -playerSpeed;
 		} else if (Input.GetKeyDown("d") && !moveFloor) {
@@ -82,13 +91,40 @@ public class WorldController : MonoBehaviour {
 		} else if (Input.GetKeyUp("a") || Input.GetKeyUp("d")) {
 			player2.accel = 0;
 		}
-	
-		if (moveFloor && !((mov1.touchingLeftWall && mov2.touchingRightWall) || (mov1.touchingRightWall && mov2.touchingLeftWall))) {
+		
+		if (moveFloor && !((player1.touchingLeftWall && player2.touchingRightWall) || (player1.touchingRightWall && player2.touchingLeftWall))) {
 			floorAccel = playerSpeed;
 			MoveFloors(1);
 			MoveFloors(2);
 		} else {
 			floorAccel = 0;
+		}
+	}
+
+	private void CheckForAbilityUse() {
+		if (Input.GetKeyDown ("p")) {
+			player1.wantsToChange = true;
+			channelingTime = 0f;
+		}
+		else if (Input.GetKeyUp("p")) player1.wantsToChange = false;
+
+		if (Input.GetKeyDown ("v")) {
+			player2.wantsToChange = true;
+			channelingTime = 0f;
+		}
+		else if (Input.GetKeyUp("v")) player2.wantsToChange = false;
+
+		if (player1.wantsToChange && player2.wantsToChange) {
+			channelingTime += Time.deltaTime;
+
+			if (channelingTime >= channelingTimeLimit) {
+				player1.canHitHard = !player1.canHitHard;
+				player1.canJumpHigh = !player1.canJumpHigh;
+				player2.canHitHard = !player2.canHitHard;
+				player2.canJumpHigh = !player2.canJumpHigh;
+				player1.wantsToChange = false;
+				player2.wantsToChange = false;
+			}
 		}
 	}
 
