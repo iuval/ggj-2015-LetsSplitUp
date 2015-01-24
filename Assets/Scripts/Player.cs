@@ -73,7 +73,8 @@ public class Player : MonoBehaviour {
 			animator.SetBool ("Jumping", true);
 			Vector2 vel = rigidbody2D.velocity;
 			if (canJumpHigh) {
-				vel.y += WorldController.playerJumpSpeed * 1.5f;
+				vel.y += WorldController.playerJumpSpeed * 1.8f;
+				accel *= 2f;
 			} else {
 				vel.y += WorldController.playerJumpSpeed;
 			}

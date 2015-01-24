@@ -6,7 +6,7 @@ public class WorldController : MonoBehaviour {
 	public Player player1;
 	public Player player2;
 	public GameObject badGuy;
-	private float badGuySpeed = 0.04f;
+	private float badGuySpeed = 0.005f;
 
 	public static float floorAccel = 0;
 	public static int playersCountTouchingRightWall = 0;
@@ -87,7 +87,7 @@ public class WorldController : MonoBehaviour {
 		} else {
 			return 10;
 		}
-		return lastObstacle.transform.position.x + Random.Range(10, 40);
+		return lastObstacle.transform.position.x + Random.Range(15, 40);
 	}
 	
 	// Update is called once per frame
