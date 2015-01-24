@@ -9,13 +9,15 @@ public class WorldController : MonoBehaviour {
 	public static float floorAccel = 0;
 	public static int playersCountTouchingRightWall = 0;
 	private bool moveFloor = false;
-
+	
+	public static float behindWallSpeed = 0.08f;
 	public static float playerSpeed = 0.1f;
 	public static int playersMaxDistance = 5;
-	public static int borderDistance = 10;
+	public static int distanceToDestroyFloor = 25;
+	public int floorCount = 4;
 		
 	public GameObject floor;
-	public GameObject[] traps;
+	public GameObject[] behindWalls;
 	
 	public ArrayList floor1Objects;
 	public ArrayList floor2Objects;
@@ -32,7 +34,7 @@ public class WorldController : MonoBehaviour {
 		floor1Objects = new ArrayList();
 		floor2Objects = new ArrayList();
 		floorObjectsToDestroy = new ArrayList();
-		for (int i = 0; i < 5; i ++) {
+		for (int i = 0; i < floorCount; i ++) {
 			AddFloorToLevel (1);
 			AddFloorToLevel (2);
 		}
@@ -148,9 +150,21 @@ public class WorldController : MonoBehaviour {
 		}
 		foreach (GameObject floorObject in floorObjectsToDestroy) {
 			floorObjects.Remove(floorObject);
+			Destroy(floorObject);
 			AddFloorToLevel(level);
 		}
 		floorObjectsToDestroy.Clear ();
+
+		foreach (GameObject wallObject in behindWalls) {
+			Vector3 pos = wallObject.transform.position;
+			pos.x -= behindWallSpeed;
+			
+			if (pos.x < -45.82f) {
+				pos.x = 45.82f;
+			}
+
+			wallObject.transform.position = pos;
+		}
 	}
 
 	private ArrayList FloorObjectsForLevel(int level) {

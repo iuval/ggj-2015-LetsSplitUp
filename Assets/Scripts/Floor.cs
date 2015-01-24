@@ -22,6 +22,6 @@ public class Floor : MonoBehaviour {
 	}
 
 	public bool IsOutside() {
-		return gameObject.transform.position.x < -WorldController.borderDistance;
+		return gameObject.transform.position.x < -WorldController.distanceToDestroyFloor;
 	}
 }
