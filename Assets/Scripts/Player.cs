@@ -13,6 +13,8 @@ public class Player : MonoBehaviour {
 
 	public bool wantsToChange = false;
 
+	private GameObject obstacle;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -32,6 +34,8 @@ public class Player : MonoBehaviour {
 			touchingLeftWall = true;
 		} else if (collision.gameObject.tag == "Floor") {
 			touchingFloor = true;
+		} else if (collision.gameObject.tag == "Obstacle") {
+			obstacle = collision.gameObject;
 		}
 	}
 	
@@ -42,14 +46,30 @@ public class Player : MonoBehaviour {
 			touchingLeftWall = false;
 		} else if (collision.gameObject.tag == "Floor") {
 			touchingFloor = false;
+		} else if (collision.gameObject.tag == "Obstacle") {
+			obstacle = null;
 		}
 	}
 
 	public void Jump() {
 		if (touchingFloor) {
 			Vector2 vel = rigidbody2D.velocity;
-			vel.y += WorldController.playerJumpSpeed;
+			if (canJumpHigh) {
+				vel.y += WorldController.playerJumpSpeed;
+			} else {
+				vel.y += WorldController.playerJumpSpeed * 1.5f;
+			}
 			rigidbody2D.velocity = vel;
+		}
+	}
+
+	public void Hit() {
+		if (canHitHard && obstacle) {
+			BoxCollider2D box = (BoxCollider2D)obstacle.collider2D;
+			Vector3 center = box.center;
+			center.y -= box.size.y / 2;
+			box.center = center;
+			box.size = new Vector3(2f, 0.2f, 0);
 		}
 	}
 }

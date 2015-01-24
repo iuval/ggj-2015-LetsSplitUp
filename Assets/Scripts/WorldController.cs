@@ -43,7 +43,7 @@ public class WorldController : MonoBehaviour {
 	}
 
 	private void AddObstacleToLevel(int level) {
-		float x = GetNewXForFloor(level);
+		float x = GetNewXForObstacle(level);
 		GameObject newFloor = (GameObject)GameObject.Instantiate (breakableObstacles[Random.Range(0, breakableObstacles.Length)]);
 		newFloor.transform.parent = gameObject.transform;
 		if (level == 1) {
@@ -57,16 +57,16 @@ public class WorldController : MonoBehaviour {
 		}
 	}
 
-	private float GetNewXForFloor(int level) {
-		GameObject lastFloor;
+	private float GetNewXForObstacle(int level) {
+		GameObject lastObstacle;
 		if (level == 1 && obstacle1Objects.Count > 0) {
-			lastFloor = ((GameObject)obstacle1Objects [obstacle1Objects.Count - 1]);
+			lastObstacle = ((GameObject)obstacle1Objects [obstacle1Objects.Count - 1]);
 		} else if (level == 2 && obstacle2Objects.Count > 0) {
-			lastFloor = ((GameObject)obstacle2Objects [obstacle2Objects.Count - 1]);
+			lastObstacle = ((GameObject)obstacle2Objects [obstacle2Objects.Count - 1]);
 		} else {
 			return 10;
 		}
-		return lastFloor.transform.position.x + Random.Range(6, 30);
+		return lastObstacle.transform.position.x + Random.Range(6, 30);
 	}
 	
 	// Update is called once per frame
@@ -114,7 +114,15 @@ public class WorldController : MonoBehaviour {
 		}
 	}
 
-	private void CheckForAbilityUse() {
+	private void CheckForAbilityUse() {	
+		if (Input.GetKeyDown ("o")) {
+			player1.Hit();
+		}
+		
+		if (Input.GetKeyDown ("c")) {
+			player2.Hit();
+		}
+	
 		if (Input.GetKeyDown ("p")) {
 			player1.wantsToChange = true;
 			channelingTime = 0f;
