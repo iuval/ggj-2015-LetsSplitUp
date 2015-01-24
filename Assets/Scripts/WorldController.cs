@@ -10,7 +10,7 @@ public class WorldController : MonoBehaviour {
 	public static int playersCountTouchingRightWall = 0;
 	private bool moveFloor = false;
 	
-	public static float behindWallSpeed = 0.1f;
+	public static float behindWallSpeed = 0.05f;
 	public static float playerSpeed = 0.1f;
 	public static float playerJumpSpeed = 10f;
 	public static int playersMaxDistance = 5;
@@ -28,6 +28,8 @@ public class WorldController : MonoBehaviour {
 	
 	public float channelingTimeLimit = 1.0f;
 	public float channelingTime = 0.0f;
+	public float cooldownTime = 0.0f;
+	public float cooldownTimeLimit = 2.0f;
 
 	void Start () {
 		player1.canHitHard = true;
@@ -81,12 +83,15 @@ public class WorldController : MonoBehaviour {
 		
 		if (Input.GetKeyDown("left")) {
 			player1.accel = -playerSpeed;
+			player1.RunLeft();
 		}
 		if (Input.GetKeyDown("right") && !moveFloor) {
 			player1.accel = playerSpeed;
+			player1.RunRight();
 		}
 		if (Input.GetKeyUp("left") || Input.GetKeyUp("right")) {
 			player1.accel = 0;
+			player1.Stand();
 		}
 		if (Input.GetKeyDown("up")) {
 			player1.Jump();
@@ -94,12 +99,15 @@ public class WorldController : MonoBehaviour {
 		
 		if (Input.GetKeyDown("a")) {
 			player2.accel = -playerSpeed;
+			player2.RunLeft();
 		} 
 		if (Input.GetKeyDown("d") && !moveFloor) {
 			player2.accel = playerSpeed;
+			player2.RunRight();
 		} 
 		if (Input.GetKeyUp("a") || Input.GetKeyUp("d")) {
 			player2.accel = 0;
+			player2.Stand();
 		}
 		if (Input.GetKeyDown("w")) {
 			player2.Jump();
@@ -122,30 +130,37 @@ public class WorldController : MonoBehaviour {
 		if (Input.GetKeyDown ("c")) {
 			player2.Hit();
 		}
-	
-		if (Input.GetKeyDown ("p")) {
-			player1.wantsToChange = true;
-			channelingTime = 0f;
-		}
-		else if (Input.GetKeyUp("p")) player1.wantsToChange = false;
 
-		if (Input.GetKeyDown ("v")) {
-			player2.wantsToChange = true;
-			channelingTime = 0f;
-		}
-		else if (Input.GetKeyUp("v")) player2.wantsToChange = false;
-
-		if (player1.wantsToChange && player2.wantsToChange) {
-			channelingTime += Time.deltaTime;
-
-			if (channelingTime >= channelingTimeLimit) {
-				player1.canHitHard = !player1.canHitHard;
-				player1.canJumpHigh = !player1.canJumpHigh;
-				player2.canHitHard = !player2.canHitHard;
-				player2.canJumpHigh = !player2.canJumpHigh;
+		if (cooldownTime >= cooldownTimeLimit) {
+			if (Input.GetKeyDown ("p")) {
+				player1.wantsToChange = true;
+				channelingTime = 0f;
+			} else if (Input.GetKeyUp ("p"))
 				player1.wantsToChange = false;
+
+			if (Input.GetKeyDown ("v")) {
+				player2.wantsToChange = true;
+				channelingTime = 0f;
+			} else if (Input.GetKeyUp ("v"))
 				player2.wantsToChange = false;
+
+			if (player1.wantsToChange && player2.wantsToChange) {
+				channelingTime += Time.deltaTime;
+
+				if (channelingTime >= channelingTimeLimit) {
+					player1.canHitHard = !player1.canHitHard;
+					player1.canJumpHigh = !player1.canJumpHigh;
+					player2.canHitHard = !player2.canHitHard;
+					player2.canJumpHigh = !player2.canJumpHigh;
+					player1.wantsToChange = false;
+					player2.wantsToChange = false;
+
+					cooldownTime = 0;
+				}
 			}
+		} else {
+			cooldownTime += Time.deltaTime;
+			if (cooldownTime >= cooldownTimeLimit) Debug.Log("READY TO CHANGE");
 		}
 	}
 

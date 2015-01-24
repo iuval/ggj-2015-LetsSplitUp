@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
+	private Animator animator;
+
 	public bool canHitHard = false;
 	public bool canJumpHigh = false;
 
@@ -17,7 +19,7 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		animator = GetComponent <Animator>();
 	}
 	
 	// Update is called once per frame
@@ -25,6 +27,20 @@ public class Player : MonoBehaviour {
 		Vector2 pos = gameObject.transform.position;
 		pos.x += accel - WorldController.floorAccel;
 		gameObject.transform.position = pos;
+	}
+
+	public void RunLeft() {
+		animator.SetBool ("Run", true);
+		transform.localScale = new Vector2 (-1, 1);
+	}
+	
+	public void RunRight() {
+		animator.SetBool ("Run", true);
+		transform.localScale = new Vector2 (1, 1);
+	}
+	
+	public void Stand() {
+		animator.SetBool ("Run", false);
 	}
 	
 	public void OnCollisionEnter2D(Collision2D collision) {
@@ -34,6 +50,7 @@ public class Player : MonoBehaviour {
 			touchingLeftWall = true;
 		} else if (collision.gameObject.tag == "Floor") {
 			touchingFloor = true;
+			animator.SetBool ("Jumping", false);
 		} else if (collision.gameObject.tag == "Obstacle") {
 			obstacle = collision.gameObject;
 		}
@@ -53,6 +70,7 @@ public class Player : MonoBehaviour {
 
 	public void Jump() {
 		if (touchingFloor) {
+			animator.SetBool ("Jumping", true);
 			Vector2 vel = rigidbody2D.velocity;
 			if (canJumpHigh) {
 				vel.y += WorldController.playerJumpSpeed * 1.5f;
@@ -65,6 +83,7 @@ public class Player : MonoBehaviour {
 
 	public void Hit() {
 		if (canHitHard && obstacle) {
+			animator.SetTrigger ("Hit");
 			Destroy(obstacle.collider2D);
 		}
 	}
