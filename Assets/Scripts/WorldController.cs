@@ -5,7 +5,7 @@ public class WorldController : MonoBehaviour {
 
 	public Player player1;
 	public Player player2;
-	public GameObject badGuy;
+	public GameObject darkness;
 	private float badGuySpeed = 0.005f;
 
 	public static float floorAccel = 0;
@@ -48,7 +48,7 @@ public class WorldController : MonoBehaviour {
 		ChannelingBar2.max = channelingTimeLimit;
 		ChannelingBar2.Reset();
 
-		badGuy.transform.position = new Vector3 (-23f, 3.4f, 19f);
+		darkness.transform.position = new Vector3 (-42.7f, 3.6f, 19f);
 
 		obstacle1Objects = new ArrayList();
 		obstacle2Objects = new ArrayList();
@@ -107,44 +107,40 @@ public class WorldController : MonoBehaviour {
 
 		CheckForAbilityUse ();
 
-		Vector3 pos = badGuy.transform.position;
+		Vector3 pos = darkness.transform.position;
 		pos.x += badGuySpeed - WorldController.floorAccel;
-		badGuy.transform.position = pos;
+		darkness.transform.position = pos;
 
 		badGuySpeed += Time.deltaTime / 1000;
 	}
 
 	private void CheckForMovement() {
 		moveFloor = (player1.accel > 0 && player1.touchingRightWall) || (player2.accel > 0 && player2.touchingRightWall);
+		player1.accel = 0;
+		player2.accel = 0;
+
+		if (Input.GetKey("left")) {
+			player1.accel -= playerSpeed;
+		}
+		if (Input.GetKey("right")) {
+			player1.accel += playerSpeed;
+		}
+
+		if (player1.accel > 0) player1.RunRight ();
+		else if (player1.accel < 0) player1.RunLeft ();
+		else player1.Stand ();
+
+		if (Input.GetKeyDown("up")) player1.Jump();
 		
-		if (Input.GetKeyDown("left")) {
-			player1.accel = -playerSpeed;
-			player1.RunLeft();
-		}
-		if (Input.GetKeyDown("right") && !moveFloor) {
-			player1.accel = playerSpeed;
-			player1.RunRight();
-		}
-		if (Input.GetKeyUp("left") || Input.GetKeyUp("right")) {
-			player1.accel = 0;
-			player1.Stand();
-		}
-		if (Input.GetKeyDown("up")) {
-			player1.Jump();
-		}
+		if (Input.GetKey("a")) player2.accel -= playerSpeed;
+		if (Input.GetKey("d")) {
+			player2.accel += playerSpeed;
+		} 
 		
-		if (Input.GetKeyDown("a")) {
-			player2.accel = -playerSpeed;
-			player2.RunLeft();
-		} 
-		if (Input.GetKeyDown("d") && !moveFloor) {
-			player2.accel = playerSpeed;
-			player2.RunRight();
-		} 
-		if (Input.GetKeyUp("a") || Input.GetKeyUp("d")) {
-			player2.accel = 0;
-			player2.Stand();
-		}
+		if (player2.accel > 0) player2.RunRight ();
+		else if (player2.accel < 0) player2.RunLeft ();
+		else player2.Stand ();
+
 		if (Input.GetKeyDown("w")) {
 			player2.Jump();
 		}

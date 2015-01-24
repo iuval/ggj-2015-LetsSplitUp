@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 	public bool canJumpHigh = false;
 
 	public float accel = 0;
+	public float push = 0;
 	public bool touchingRightWall = false;
 	public bool touchingLeftWall = false;
 	public bool touchingFloor = false;
@@ -25,8 +26,9 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Vector2 pos = gameObject.transform.position;
-		pos.x += accel - WorldController.floorAccel;
+		pos.x += accel - WorldController.floorAccel + push;
 		gameObject.transform.position = pos;
+		push = 0;
 	}
 
 	public void RunLeft() {
@@ -74,7 +76,7 @@ public class Player : MonoBehaviour {
 			Vector2 vel = rigidbody2D.velocity;
 			if (canJumpHigh) {
 				vel.y += WorldController.playerJumpSpeed * 1.8f;
-				accel *= 2f;
+				push = WorldController.playerSpeed;
 			} else {
 				vel.y += WorldController.playerJumpSpeed;
 			}
