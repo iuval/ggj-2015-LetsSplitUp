@@ -286,8 +286,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 601117983}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -9, z: 8.66650391}
-  m_LocalScale: {x: 46.3300018, y: 1, z: 1}
+  m_LocalPosition: {x: 23, y: -9, z: 8.66650391}
+  m_LocalScale: {x: 100, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -805,8 +805,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1: {fileID: 1321096075}
   player2: {fileID: 2132230092}
-  obstacleCount: 4
+  obstacleCount: 3
   obstacle: {fileID: 100002, guid: 29346a53d13e44f76b961ae00ca4c3bb, type: 2}
+  breakableObstacles:
+  - {fileID: 100002, guid: 29346a53d13e44f76b961ae00ca4c3bb, type: 2}
+  - {fileID: 100002, guid: 271068bbc3001452b9f2da815987b128, type: 2}
+  - {fileID: 100002, guid: 3a7f022accb054ea6b942e8cc6f336d5, type: 2}
   behindWalls:
   - {fileID: 904980657}
   - {fileID: 738218498}
@@ -1081,8 +1085,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1891727372}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: 8.66650391}
-  m_LocalScale: {x: 46.3300018, y: 1, z: 1}
+  m_LocalPosition: {x: 23, y: 4, z: 8.66650391}
+  m_LocalScale: {x: 100, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5

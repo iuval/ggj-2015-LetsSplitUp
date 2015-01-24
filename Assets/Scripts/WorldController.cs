@@ -18,6 +18,7 @@ public class WorldController : MonoBehaviour {
 	public int obstacleCount = 4;
 		
 	public GameObject obstacle;
+	public GameObject[] breakableObstacles;
 	public GameObject[] behindWalls;
 	
 	public ArrayList obstacle1Objects;
@@ -43,16 +44,15 @@ public class WorldController : MonoBehaviour {
 
 	private void AddObstacleToLevel(int level) {
 		float x = GetNewXForFloor(level);
-
-		GameObject newFloor = (GameObject)GameObject.Instantiate (obstacle);
+		GameObject newFloor = (GameObject)GameObject.Instantiate (breakableObstacles[Random.Range(0, breakableObstacles.Length)]);
 		newFloor.transform.parent = gameObject.transform;
 		if (level == 1) {
 			
-			newFloor.transform.position = new Vector2 (x, -8.674157f);
+			newFloor.transform.position = new Vector3 (x, -8.674157f, 20);
 			obstacle1Objects.Add (newFloor);
 		} else {
 			
-			newFloor.transform.position = new Vector2 (x, 4.2f);
+			newFloor.transform.position = new Vector3 (x, 4.2f, 20);
 			obstacle2Objects.Add (newFloor);
 		}
 	}
@@ -64,9 +64,9 @@ public class WorldController : MonoBehaviour {
 		} else if (level == 2 && obstacle2Objects.Count > 0) {
 			lastFloor = ((GameObject)obstacle2Objects [obstacle2Objects.Count - 1]);
 		} else {
-			return -10;
+			return 10;
 		}
-		return lastFloor.transform.position.x + (lastFloor.collider2D.bounds.size.x / 2);
+		return lastFloor.transform.position.x + Random.Range(6, 30);
 	}
 	
 	// Update is called once per frame
@@ -160,7 +160,7 @@ public class WorldController : MonoBehaviour {
 		ArrayList obstacleObjects = ObstacleObjectsForLevel(level);
 		foreach(GameObject obstacleObject in obstacleObjects) {
 			if (obstacleObject) {
-				Vector2 pos = obstacleObject.transform.position;
+				Vector3 pos = obstacleObject.transform.position;
 				pos.x -= floorAccel;
 				obstacleObject.transform.position = pos;
 
