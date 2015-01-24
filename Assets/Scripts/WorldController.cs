@@ -28,13 +28,15 @@ public class WorldController : MonoBehaviour {
 	
 	public ArrayList obstacleObjectsToDestroy;
 	
-	public float channelingTimeLimit = 1.0f;
-	public float channelingTime = 0.0f;
-	public float cooldownTime = 0.0f;
-	public float cooldownTimeLimit = 2.0f;
-
 	public ChannelingBar ChannelingBar1;
 	public ChannelingBar ChannelingBar2;
+	public float channelingTimeLimit = 1.0f;
+	public float channelingTime = 0f;
+
+	public CooldownClock cooldownClock;
+	public float cooldownTime = 2.0f;
+	public float cooldownTimeLimit = 2.0f;
+
 
 	void Start () {
 		player1.canHitHard = true;
@@ -166,26 +168,39 @@ public class WorldController : MonoBehaviour {
 		}
 
 		if (cooldownTime >= cooldownTimeLimit) {
-			ChannelingBar1.Hide ();
-			ChannelingBar2.Hide ();
 			if (Input.GetKeyDown ("p")) {
 				player1.wantsToChange = true;
 				channelingTime = 0f;
-			} else if (Input.GetKeyUp ("p"))
+			} else if (Input.GetKeyUp ("p")) {
 				player1.wantsToChange = false;
+				ChannelingBar1.Hide ();
+				ChannelingBar2.Hide ();
+			}
 
 			if (Input.GetKeyDown ("v")) {
 				player2.wantsToChange = true;
 				channelingTime = 0f;
-			} else if (Input.GetKeyUp ("v"))
+			} else if (Input.GetKeyUp ("v")) {
 				player2.wantsToChange = false;
+				ChannelingBar1.Hide ();
+				ChannelingBar2.Hide ();
+			}
+
 
 			if (player1.wantsToChange && player2.wantsToChange) {
-				ChannelingBar1.Reset();
-				ChannelingBar2.Reset();
+				if (channelingTime == 0) {
+					ChannelingBar1.Reset();
+					ChannelingBar2.Reset();
+				}
+				ChannelingBar1.Show ();
+				ChannelingBar1.SetValue(channelingTime);
+				ChannelingBar2.Show ();
+				ChannelingBar2.SetValue(channelingTime);
 				channelingTime += Time.deltaTime;
 
 				if (channelingTime >= channelingTimeLimit) {
+					channelingTime = 0;
+
 					player1.canHitHard = !player1.canHitHard;
 					player1.canJumpHigh = !player1.canJumpHigh;
 					player2.canHitHard = !player2.canHitHard;
@@ -193,16 +208,15 @@ public class WorldController : MonoBehaviour {
 					player1.wantsToChange = false;
 					player2.wantsToChange = false;
 
+					ChannelingBar1.Hide ();
+					ChannelingBar2.Hide ();
+					
 					cooldownTime = 0;
+					cooldownClock.Show(); 
 				}
 			}
 		} else {
 			cooldownTime += Time.deltaTime;
-			ChannelingBar1.Show ();
-			ChannelingBar1.SetValue(cooldownTime);
-			ChannelingBar2.Show ();
-			ChannelingBar2.SetValue(cooldownTime);
-			if (cooldownTime >= cooldownTimeLimit) Debug.Log("READY TO CHANGE");
 		}
 	}
 
