@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 	public float accel = 0;
 	public bool touchingRightWall = false;
 	public bool touchingLeftWall = false;
+	public bool touchingFloor = false;
 
 	public bool wantsToChange = false;
 
@@ -29,6 +30,8 @@ public class Player : MonoBehaviour {
 			touchingRightWall = true;
 		} else if (collision.gameObject.name == "LeftWall") {
 			touchingLeftWall = true;
+		} else if (collision.gameObject.tag == "Floor") {
+			touchingFloor = true;
 		}
 	}
 	
@@ -37,6 +40,16 @@ public class Player : MonoBehaviour {
 			touchingRightWall = false;
 		} else if (collision.gameObject.name == "LeftWall") {
 			touchingLeftWall = false;
+		} else if (collision.gameObject.tag == "Floor") {
+			touchingFloor = false;
+		}
+	}
+
+	public void Jump() {
+		if (touchingFloor) {
+			Vector2 vel = rigidbody2D.velocity;
+			vel.y += WorldController.playerJumpSpeed;
+			rigidbody2D.velocity = vel;
 		}
 	}
 }
