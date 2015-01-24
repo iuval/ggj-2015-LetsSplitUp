@@ -55,9 +55,9 @@ public class Player : MonoBehaviour {
 		if (touchingFloor) {
 			Vector2 vel = rigidbody2D.velocity;
 			if (canJumpHigh) {
-				vel.y += WorldController.playerJumpSpeed;
-			} else {
 				vel.y += WorldController.playerJumpSpeed * 1.5f;
+			} else {
+				vel.y += WorldController.playerJumpSpeed;
 			}
 			rigidbody2D.velocity = vel;
 		}
@@ -65,11 +65,7 @@ public class Player : MonoBehaviour {
 
 	public void Hit() {
 		if (canHitHard && obstacle) {
-			BoxCollider2D box = (BoxCollider2D)obstacle.collider2D;
-			Vector3 center = box.center;
-			center.y -= box.size.y / 2;
-			box.center = center;
-			box.size = new Vector3(2f, 0.2f, 0);
+			Destroy(obstacle.collider2D);
 		}
 	}
 }

@@ -10,7 +10,7 @@ public class WorldController : MonoBehaviour {
 	public static int playersCountTouchingRightWall = 0;
 	private bool moveFloor = false;
 	
-	public static float behindWallSpeed = 0.08f;
+	public static float behindWallSpeed = 0.1f;
 	public static float playerSpeed = 0.1f;
 	public static float playerJumpSpeed = 10f;
 	public static int playersMaxDistance = 5;
@@ -48,11 +48,11 @@ public class WorldController : MonoBehaviour {
 		newFloor.transform.parent = gameObject.transform;
 		if (level == 1) {
 			
-			newFloor.transform.position = new Vector3 (x, -8.674157f, 20);
+			newFloor.transform.position = new Vector3 (x, -8.8f, 30);
 			obstacle1Objects.Add (newFloor);
 		} else {
 			
-			newFloor.transform.position = new Vector3 (x, 4.2f, 20);
+			newFloor.transform.position = new Vector3 (x, 4f, 30);
 			obstacle2Objects.Add (newFloor);
 		}
 	}

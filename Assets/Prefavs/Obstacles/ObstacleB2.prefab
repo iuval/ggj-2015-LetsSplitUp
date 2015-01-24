@@ -27,6 +27,7 @@ GameObject:
   - 61: {fileID: 6100000}
   - 50: {fileID: 5000000}
   - 114: {fileID: 11400000}
+  - 60: {fileID: 6000000}
   m_Layer: 0
   m_Name: ObstacleB2
   m_TagString: Obstacle
@@ -41,7 +42,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: -.50999999, z: -10}
   m_LocalScale: {x: 2.20446253, y: 2.20446134, z: 2.63574553}
   m_Children: []
   m_Father: {fileID: 400002}
@@ -53,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -31.4187832, y: -6.76698589, z: 20}
+  m_LocalPosition: {x: 26.9485779, y: 4, z: 40}
   m_LocalScale: {x: 1.19564152, y: 1.19564152, z: 1}
   m_Children:
   - {fileID: 400000}
@@ -74,8 +75,8 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
---- !u!61 &6100000
-BoxCollider2D:
+--- !u!60 &6000000
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -83,8 +84,24 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Size: {x: 3.31999993, y: 6.67999983}
-  m_Center: {x: 0, y: 4.13000011}
+  m_Poly:
+    m_Paths:
+    - - {x: 1.97233355, y: 7.6566205}
+      - {x: 2.06049514, y: .309019297}
+      - {x: -2.041991, y: .382600278}
+      - {x: -2.35466743, y: 1.24549556}
+      - {x: -1.03323781, y: 7.74635315}
+--- !u!61 &6100000
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 0
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Size: {x: 3.31999993, y: 6.94653082}
+  m_Center: {x: 0, y: 3.99672651}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
