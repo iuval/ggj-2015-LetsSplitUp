@@ -42,10 +42,10 @@ public class WorldController : MonoBehaviour {
 		player1.canHitHard = true;
 		player2.canJumpHigh = true;
 		ChannelingBar1.Hide();
-		ChannelingBar1.max = cooldownTimeLimit;
+		ChannelingBar1.max = channelingTimeLimit;
 		ChannelingBar1.Reset();
 		ChannelingBar2.Hide();
-		ChannelingBar2.max = cooldownTimeLimit;
+		ChannelingBar2.max = channelingTimeLimit;
 		ChannelingBar2.Reset();
 
 		badGuy.transform.position = new Vector3 (-23f, 3.4f, 19f);
@@ -161,16 +161,22 @@ public class WorldController : MonoBehaviour {
 	private void CheckForAbilityUse() {	
 		if (Input.GetKeyDown ("o")) {
 			player1.Hit();
+			player1.wantsToChange = false;
+			ChannelingBar1.Hide ();
+			ChannelingBar2.Hide ();
 		}
 		
 		if (Input.GetKeyDown ("c")) {
 			player2.Hit();
+			player2.wantsToChange = false;
+			ChannelingBar1.Hide ();
+			ChannelingBar2.Hide ();
 		}
 
 		if (cooldownTime >= cooldownTimeLimit) {
 			if (Input.GetKeyDown ("p")) {
 				player1.wantsToChange = true;
-				channelingTime = 0f;
+				channelingTime = 0;
 			} else if (Input.GetKeyUp ("p")) {
 				player1.wantsToChange = false;
 				ChannelingBar1.Hide ();
@@ -179,7 +185,7 @@ public class WorldController : MonoBehaviour {
 
 			if (Input.GetKeyDown ("v")) {
 				player2.wantsToChange = true;
-				channelingTime = 0f;
+				channelingTime = 0;
 			} else if (Input.GetKeyUp ("v")) {
 				player2.wantsToChange = false;
 				ChannelingBar1.Hide ();
@@ -191,10 +197,10 @@ public class WorldController : MonoBehaviour {
 				if (channelingTime == 0) {
 					ChannelingBar1.Reset();
 					ChannelingBar2.Reset();
+					ChannelingBar1.Show ();
+					ChannelingBar2.Show ();
 				}
-				ChannelingBar1.Show ();
 				ChannelingBar1.SetValue(channelingTime);
-				ChannelingBar2.Show ();
 				ChannelingBar2.SetValue(channelingTime);
 				channelingTime += Time.deltaTime;
 
