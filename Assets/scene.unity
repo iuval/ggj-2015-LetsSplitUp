@@ -888,7 +888,7 @@ Animator:
   m_GameObject: {fileID: 1017399856}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1a3a89a9df2634d7ea359612f8e058c1, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6c7f24b7a46da43539bac618ecc89c75, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1329,10 +1329,12 @@ MonoBehaviour:
   canHitHard: 0
   canJumpHigh: 0
   accel: 0
+  push: 0
   touchingRightWall: 0
   touchingLeftWall: 0
   touchingFloor: 0
   wantsToChange: 0
+  camera: {fileID: 1745463894}
 --- !u!95 &1321096076
 Animator:
   serializedVersion: 3
@@ -1577,6 +1579,8 @@ GameObject:
   - 92: {fileID: 1745463890}
   - 124: {fileID: 1745463889}
   - 81: {fileID: 1745463888}
+  - 95: {fileID: 1745463893}
+  - 114: {fileID: 1745463894}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1649,6 +1653,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!95 &1745463893
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1745463887}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e16bb73a09c45456eadc30fe1941c763, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &1745463894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1745463887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44fde89cfe3a464d9484223a8473a2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1759755191
 GameObject:
   m_ObjectHideFlags: 0
@@ -2001,10 +2031,12 @@ MonoBehaviour:
   canHitHard: 0
   canJumpHigh: 0
   accel: 0
+  push: 0
   touchingRightWall: 0
   touchingLeftWall: 0
   touchingFloor: 0
   wantsToChange: 0
+  camera: {fileID: 1745463894}
 --- !u!50 &2132230093
 Rigidbody2D:
   m_ObjectHideFlags: 0

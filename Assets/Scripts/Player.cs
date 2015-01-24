@@ -18,6 +18,8 @@ public class Player : MonoBehaviour {
 
 	private GameObject obstacle;
 
+	public CameraControl camera;
+
 	// Use this for initialization
 	void Start () {
 		animator = GetComponent <Animator>();
@@ -88,6 +90,7 @@ public class Player : MonoBehaviour {
 		if (canHitHard && obstacle) {
 			animator.SetTrigger ("Hit");
 			Destroy(obstacle.collider2D);
+			camera.Shake();
 		}
 	}
 }
