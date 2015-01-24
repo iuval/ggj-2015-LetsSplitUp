@@ -33,9 +33,18 @@ public class WorldController : MonoBehaviour {
 	public float cooldownTime = 0.0f;
 	public float cooldownTimeLimit = 2.0f;
 
+	public ChannelingBar ChannelingBar1;
+	public ChannelingBar ChannelingBar2;
+
 	void Start () {
 		player1.canHitHard = true;
 		player2.canJumpHigh = true;
+		ChannelingBar1.Hide();
+		ChannelingBar1.max = cooldownTimeLimit;
+		ChannelingBar1.Reset();
+		ChannelingBar2.Hide();
+		ChannelingBar2.max = cooldownTimeLimit;
+		ChannelingBar2.Reset();
 
 		badGuy.transform.position = new Vector3 (-23f, 3.4f, 19f);
 
@@ -157,6 +166,8 @@ public class WorldController : MonoBehaviour {
 		}
 
 		if (cooldownTime >= cooldownTimeLimit) {
+			ChannelingBar1.Hide ();
+			ChannelingBar2.Hide ();
 			if (Input.GetKeyDown ("p")) {
 				player1.wantsToChange = true;
 				channelingTime = 0f;
@@ -170,6 +181,8 @@ public class WorldController : MonoBehaviour {
 				player2.wantsToChange = false;
 
 			if (player1.wantsToChange && player2.wantsToChange) {
+				ChannelingBar1.Reset();
+				ChannelingBar2.Reset();
 				channelingTime += Time.deltaTime;
 
 				if (channelingTime >= channelingTimeLimit) {
@@ -185,6 +198,10 @@ public class WorldController : MonoBehaviour {
 			}
 		} else {
 			cooldownTime += Time.deltaTime;
+			ChannelingBar1.Show ();
+			ChannelingBar1.SetValue(cooldownTime);
+			ChannelingBar2.Show ();
+			ChannelingBar2.SetValue(cooldownTime);
 			if (cooldownTime >= cooldownTimeLimit) Debug.Log("READY TO CHANGE");
 		}
 	}
