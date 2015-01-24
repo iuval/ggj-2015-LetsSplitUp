@@ -5,7 +5,9 @@ public class WorldController : MonoBehaviour {
 
 	public Player player1;
 	public Player player2;
-	
+	public GameObject badGuy;
+	private float badGuySpeed = 0.04f;
+
 	public static float floorAccel = 0;
 	public static int playersCountTouchingRightWall = 0;
 	private bool moveFloor = false;
@@ -16,9 +18,9 @@ public class WorldController : MonoBehaviour {
 	public static int playersMaxDistance = 5;
 	public static int distanceToDestroyObstacle = 25;
 	public int obstacleCount = 4;
-		
-	public GameObject obstacle;
+
 	public GameObject[] breakableObstacles;
+	public GameObject[] jumpableObstacles;
 	public GameObject[] behindWalls;
 	
 	public ArrayList obstacle1Objects;
@@ -35,6 +37,8 @@ public class WorldController : MonoBehaviour {
 		player1.canHitHard = true;
 		player2.canJumpHigh = true;
 
+		badGuy.transform.position = new Vector3 (-23f, 3.4f, 19f);
+
 		obstacle1Objects = new ArrayList();
 		obstacle2Objects = new ArrayList();
 		obstacleObjectsToDestroy = new ArrayList();
@@ -46,15 +50,30 @@ public class WorldController : MonoBehaviour {
 
 	private void AddObstacleToLevel(int level) {
 		float x = GetNewXForObstacle(level);
-		GameObject newFloor = (GameObject)GameObject.Instantiate (breakableObstacles[Random.Range(0, breakableObstacles.Length)]);
-		newFloor.transform.parent = gameObject.transform;
-		if (level == 1) {
-			
-			newFloor.transform.position = new Vector3 (x, -8.8f, 30);
-			obstacle1Objects.Add (newFloor);
+		float y;
+
+		GameObject newFloor;
+		if (Random.Range(0f, 1f) < 0.5f) {
+			newFloor = (GameObject)GameObject.Instantiate (breakableObstacles[Random.Range(0, breakableObstacles.Length)]);
+			if (level == 1) {	
+				y = -8.8f;
+			} else {	
+				y = 4f;
+			} 
 		} else {
-			
-			newFloor.transform.position = new Vector3 (x, 4f, 30);
+			newFloor = (GameObject)GameObject.Instantiate (jumpableObstacles[Random.Range(0, jumpableObstacles.Length)]);
+			if (level == 1) {	
+				y = -6.21f;
+			} else {	
+				y = 6.7f;
+			} 
+		}
+		newFloor.transform.parent = gameObject.transform;
+		if (level == 1) {	
+			newFloor.transform.position = new Vector3 (x, y, 30);
+			obstacle1Objects.Add (newFloor);
+		} else {	
+			newFloor.transform.position = new Vector3 (x, y, 30);
 			obstacle2Objects.Add (newFloor);
 		}
 	}
@@ -68,7 +87,7 @@ public class WorldController : MonoBehaviour {
 		} else {
 			return 10;
 		}
-		return lastObstacle.transform.position.x + Random.Range(6, 30);
+		return lastObstacle.transform.position.x + Random.Range(10, 40);
 	}
 	
 	// Update is called once per frame
@@ -76,6 +95,12 @@ public class WorldController : MonoBehaviour {
 		CheckForMovement ();
 
 		CheckForAbilityUse ();
+
+		Vector3 pos = badGuy.transform.position;
+		pos.x += badGuySpeed - WorldController.floorAccel;
+		badGuy.transform.position = pos;
+
+		badGuySpeed += Time.deltaTime / 1000;
 	}
 
 	private void CheckForMovement() {
