@@ -21,6 +21,7 @@ public class Player : MonoBehaviour {
 	private Obstacle obstacle;
 
 	public CameraControl camera;
+	public GameObject PoofPrefav;
 
 	// Use this for initialization
 	void Start () {
@@ -95,6 +96,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public void ChangePowers() {
+		GameObject.Instantiate (PoofPrefav, transform.position, Quaternion.identity);
 		canHitHard = !canHitHard;
 		canJumpHigh = !canJumpHigh;
 		animator.SetTrigger ("Switch");

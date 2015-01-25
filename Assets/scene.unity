@@ -1285,6 +1285,7 @@ MonoBehaviour:
   floorName: SecondFloor
   wantsToChange: 0
   camera: {fileID: 1745463894}
+  PoofPrefav: {fileID: 100000, guid: dc67b3d59af5c48218066730947b83d8, type: 2}
 --- !u!95 &1321096076
 Animator:
   serializedVersion: 3
@@ -2062,6 +2063,7 @@ MonoBehaviour:
   floorName: FirstFloor
   wantsToChange: 0
   camera: {fileID: 1745463894}
+  PoofPrefav: {fileID: 100000, guid: dc67b3d59af5c48218066730947b83d8, type: 2}
 --- !u!50 &2132230093
 Rigidbody2D:
   m_ObjectHideFlags: 0
