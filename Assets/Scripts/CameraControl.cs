@@ -16,6 +16,7 @@ public class CameraControl : MonoBehaviour {
 	}
 
 	public void Shake () {
+		Debug.Log ("aSHAKEEE");
 		animator.SetTrigger ("Shake");
 	}
 }

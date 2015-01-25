@@ -94,7 +94,8 @@ public class Player : MonoBehaviour {
 		} else {
 			if (canHitHard && obstacle && obstacle.destroyable) {
 				animator.SetTrigger ("Hit");
-				obstacle.Destory();
+				obstacle.Hit(collider2D.bounds.center.y);
+				obstacle = null;
 				camera.Shake ();
 			}
 		}

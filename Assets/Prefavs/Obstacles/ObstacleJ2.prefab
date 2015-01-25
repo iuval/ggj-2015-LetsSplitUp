@@ -101,6 +101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 808bbddd2f6784d3a8e756090e7462d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyable: 0
+  explotionPrefav: {fileID: 100000, guid: 3048859c47af74501ae233e0a24c6250, type: 2}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
