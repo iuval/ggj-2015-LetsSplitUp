@@ -4,6 +4,9 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	private Animator animator;
+	private AudioSource stepAudio;
+	private AudioSource hitAudio;
+	private AudioSource jumpAudio;
 	
 	// 1 = can hit hard
 	// 2 = can jump high
@@ -28,6 +31,9 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		animator = GetComponent <Animator>();
+		stepAudio = GetComponents <AudioSource> ()[0];
+		hitAudio = GetComponents <AudioSource> ()[1];
+		jumpAudio = GetComponents <AudioSource> ()[2];
 	}
 	
 	// Update is called once per frame
@@ -38,6 +44,21 @@ public class Player : MonoBehaviour {
 			gameObject.transform.position = pos;
 			push *= 0.8f;
 		}
+	}
+	
+	public void PlayJumpSFX(){
+		jumpAudio.pitch = Random.Range (2f, 3f);
+		jumpAudio.Play ();
+	}
+
+	public void PlayHitSFX(){
+		hitAudio.pitch = Random.Range (0f, 3f);
+		hitAudio.Play ();
+	}
+
+	public void PlayStepSFX(){
+		stepAudio.pitch = Random.Range (2f, 3f);
+		stepAudio.Play ();
 	}
 
 	public void RunLeft() {
