@@ -4,9 +4,10 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	private Animator animator;
-
-	public bool canHitHard = false;
-	public bool canJumpHigh = false;
+	
+	// 1 = can hit hard
+	// 2 = can jump high
+	public int power;
 
 	public float accel = 0;
 	public float push = 0;
@@ -80,14 +81,14 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Action() {
-		if (canJumpHigh) {
+		if (CanHitJumpHigh()) {
 			if (touchingFloor) {
 				Vector2 vel = rigidbody2D.velocity;
-				if (canJumpHigh) {
-					animator.SetBool ("Jumping", true);
-					vel.y += WorldController.playerJumpSpeed * 1.5f;
-					push = WorldController.playerSpeed * 2;
-				}
+
+				animator.SetBool ("Jumping", true);
+				vel.y += WorldController.playerJumpSpeed * 1.5f;
+				push = WorldController.playerSpeed * 2;
+
 				rigidbody2D.velocity = vel;
 
 				float dustX = transform.localScale.x == 1 ? collider2D.bounds.center.x - collider2D.bounds.size.x / 2 : collider2D.bounds.center.x + collider2D.bounds.size.x / 2;
@@ -95,7 +96,7 @@ public class Player : MonoBehaviour {
 				dust.transform.localScale = transform.localScale;
 			}
 		} else {
-			if (canHitHard && obstacle && obstacle.destroyable) {
+			if (CanHitHard() && obstacle && obstacle.destroyable) {
 				animator.SetTrigger ("Hit");
 				obstacle.Hit(collider2D.bounds.center.y);
 				obstacle = null;
@@ -106,13 +107,12 @@ public class Player : MonoBehaviour {
 
 	public void ChangePowers() {
 		GameObject.Instantiate (PoofPrefav, transform.position, Quaternion.identity);
-		canHitHard = !canHitHard;
-		canJumpHigh = !canJumpHigh;
-		animator.SetTrigger ("Switch");
+		power = power == 0 ? 1 : 0;
+		animator.SetInteger ("Power", power);
 
 		BoxCollider2D box = GetComponent<BoxCollider2D> ();
 		Vector3 size = box.size;
-		if (canHitHard) {
+		if (CanHitHard()) {
 			size /= 2;
 		} else {
 			size *= 2;
@@ -126,4 +126,7 @@ public class Player : MonoBehaviour {
 		velo.y = WorldController.playerJumpSpeed * 1.15f;
 		gameObject.rigidbody2D.velocity = velo;
 	}
+
+	public bool CanHitHard () { return power == 1; }
+	public bool CanHitJumpHigh () { return power == 0; }
 }

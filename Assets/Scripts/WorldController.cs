@@ -43,8 +43,8 @@ public class WorldController : MonoBehaviour {
 
 
 	void Start () {
-		player1.canHitHard = true;
-		player2.canJumpHigh = true;
+		player1.power = 1;
+		player2.power = 0;
 		ChannelingBar1.Hide();
 		ChannelingBar1.max = channelingTimeLimit;
 		ChannelingBar1.Reset();

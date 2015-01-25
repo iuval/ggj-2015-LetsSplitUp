@@ -1275,8 +1275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb7f30502fde47bc9fc14bc35ea901a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canHitHard: 0
-  canJumpHigh: 0
+  power: 0
   accel: 0
   push: 0
   touchingRightWall: 0
@@ -2054,8 +2053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb7f30502fde47bc9fc14bc35ea901a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canHitHard: 0
-  canJumpHigh: 0
+  power: 0
   accel: 0
   push: 0
   touchingRightWall: 0
