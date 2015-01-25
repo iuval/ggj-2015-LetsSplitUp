@@ -65,7 +65,7 @@ public class Player : MonoBehaviour {
 		} else if (collision.gameObject.tag == "Obstacle") {
 			obstacle = collision.gameObject.GetComponent<Obstacle>();
 		} else if (collision.gameObject.tag == "Spikes") {
-			KnockBack();
+//			KnockBack();
 			animator.SetTrigger("Damage");
 		}
 	}
@@ -122,12 +122,12 @@ public class Player : MonoBehaviour {
 		box.size = size;
 	}
 
-	public void KnockBack() {
-		Vector2 velo = gameObject.rigidbody2D.velocity;
-//		velo.x = -5.75f;
-		velo.y = WorldController.playerJumpSpeed * 1.15f;
-		gameObject.rigidbody2D.velocity = velo;
-	}
+//	public void KnockBack() {
+//		Vector2 velo = gameObject.rigidbody2D.velocity;
+////		velo.x = -5.75f;
+//		velo.y = WorldController.playerJumpSpeed * 1.15f;
+//		gameObject.rigidbody2D.velocity = velo;
+//	}
 
 	public bool CanHitHard () { return power == 1; }
 	public bool CanHitJumpHigh () { return power == 0; }

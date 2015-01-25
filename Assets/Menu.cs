@@ -18,7 +18,6 @@ public class Menu : MonoBehaviour {
 	}
 
 	public void Disable() {
-		Debug.Log ("Menu disabled");
 		gameObject.SetActive (false);
 	}
 }

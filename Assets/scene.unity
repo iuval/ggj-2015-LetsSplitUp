@@ -1387,7 +1387,7 @@ MonoBehaviour:
   touchingFloor: 0
   floorName: SecondFloor
   wantsToChange: 0
-  camera: {fileID: 1745463894}
+  camera: {fileID: 0}
   PoofPrefav: {fileID: 100000, guid: dc67b3d59af5c48218066730947b83d8, type: 2}
   JumpDustPrefav: {fileID: 100000, guid: 50130674470294898b22141ca80a1a37, type: 2}
 --- !u!95 &1321096076
@@ -1516,6 +1516,7 @@ GameObject:
   - 4: {fileID: 1691644518}
   - 114: {fileID: 1691644519}
   - 82: {fileID: 1691644520}
+  - 95: {fileID: 1691644521}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -1558,6 +1559,7 @@ MonoBehaviour:
   menu: {fileID: 1167037904}
   normalMusic: {fileID: 8300000, guid: c101cf7f47d6e4bc6b3b0b22d5969850, type: 3}
   tensionMusic: {fileID: 8300000, guid: 66b7306bb8250483da41db2ad93b202f, type: 3}
+  menuMusic: {fileID: 8300000, guid: 39636aa34580d4aaa800e007500cfcbd, type: 3}
   player1: {fileID: 1321096075}
   player2: {fileID: 2132230092}
   darkness: {fileID: 1876685382}
@@ -1640,6 +1642,21 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!95 &1691644521
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1691644517}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9ed1dc11747c84447ad41812a048e829, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1001 &1715063406
 Prefab:
   m_ObjectHideFlags: 0
@@ -2166,7 +2183,7 @@ MonoBehaviour:
   touchingFloor: 0
   floorName: FirstFloor
   wantsToChange: 0
-  camera: {fileID: 1745463894}
+  camera: {fileID: 0}
   PoofPrefav: {fileID: 100000, guid: dc67b3d59af5c48218066730947b83d8, type: 2}
   JumpDustPrefav: {fileID: 100000, guid: 50130674470294898b22141ca80a1a37, type: 2}
 --- !u!50 &2132230093

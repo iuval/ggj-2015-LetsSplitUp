@@ -4,12 +4,15 @@ using System.Collections;
 public class WorldController : MonoBehaviour {
 
 	public static bool playing = false;
+	
+	private Animator animator;
 
 	public Menu menu;
 
 	private AudioSource music;
 	public AudioClip normalMusic;
 	public AudioClip tensionMusic;
+	public AudioClip menuMusic;
 
 	public Player player1;
 	public Player player2;
@@ -34,6 +37,7 @@ public class WorldController : MonoBehaviour {
 	public ArrayList obstacle1Objects;
 	public ArrayList obstacle2Objects;
 	private float lastObstacleX = 0;
+	private bool lastObstacleIsBreakable = false;
 	
 	public ArrayList obstacleObjectsToDestroy;
 	
@@ -48,11 +52,13 @@ public class WorldController : MonoBehaviour {
 
 
 	void Start () {
-		Reset ();
-
+		animator = GetComponent <Animator>();
+	
 		music = GetComponentInChildren <AudioSource> ();
-		music.clip = normalMusic;
-		music.Play ();
+		music.volume = 0;
+
+		Reset ();
+		EndGame ();
 	}
 	
 	public void Reset() {
@@ -96,7 +102,6 @@ public class WorldController : MonoBehaviour {
 		float y;
 
 		GameObject newObstacle;
-		Debug.Log ("CREATED NEW: " + x);
 		if (Random.Range(0f, 1f) < 0.5f) {
 			newObstacle = (GameObject)GameObject.Instantiate (breakableObstacles[Random.Range(0, breakableObstacles.Length)]);
 			if (level == 1) {	
@@ -139,9 +144,9 @@ public class WorldController : MonoBehaviour {
 			CheckForAbilityUse ();
 
 			if (darkness.isVisible) {
-					music.Stop ();
-					music.clip = tensionMusic;
-					music.Play ();
+				music.Stop();
+				music.clip = tensionMusic;
+				music.Play ();
 			}
 
 			if (darkness.transform.position.x >= 33.87) {
@@ -294,13 +299,33 @@ public class WorldController : MonoBehaviour {
 		return level == 1 ? obstacle1Objects : obstacle2Objects;
 	}
 
+	public void ChangeToMenuMusic(){
+		music.Stop();
+		music.clip = menuMusic;
+		music.Play ();
+	}
+	
+	public void ChangeToNormalMusic(){
+		music.Stop();
+		music.clip = normalMusic;
+		music.Play ();
+	}
+	
+	public void ChangeToTensionMusic(){
+		music.Stop();
+		music.clip = tensionMusic;
+		music.Play ();
+	}
+
 	public void StartGame() {
+		animator.SetTrigger ("ChangeToNormalMusic");
 		Reset ();
 		menu.Hide ();
 		playing = true;
 	}
 	
 	public void EndGame() {
+		animator.SetTrigger ("ChangeToMenuMusic");
 		playing = false;
 		menu.gameObject.SetActive(true);
 		menu.Show ();
