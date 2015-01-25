@@ -14,6 +14,8 @@ public class Player : MonoBehaviour {
 	public bool touchingLeftWall = false;
 	public bool touchingFloor = false;
 
+	public string floorName;
+
 	public bool wantsToChange = false;
 
 	private GameObject obstacle;
@@ -52,7 +54,7 @@ public class Player : MonoBehaviour {
 			touchingRightWall = true;
 		} else if (collision.gameObject.name == "LeftWall") {
 			touchingLeftWall = true;
-		} else if (collision.gameObject.tag == "Floor") {
+		} else if (collision.gameObject.name == floorName) {
 			touchingFloor = true;
 			animator.SetBool ("Jumping", false);
 		} else if (collision.gameObject.tag == "Obstacle") {
@@ -65,7 +67,7 @@ public class Player : MonoBehaviour {
 			touchingRightWall = false;
 		} else if (collision.gameObject.name == "LeftWall") {
 			touchingLeftWall = false;
-		} else if (collision.gameObject.tag == "Floor") {
+		} else if (collision.gameObject.name == floorName) {
 			touchingFloor = false;
 		} else if (collision.gameObject.tag == "Obstacle") {
 			obstacle = null;

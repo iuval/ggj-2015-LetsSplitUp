@@ -352,21 +352,6 @@ State:
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
---- !u!1102 &110287627
-State:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: player_knockback
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Motions:
-  - {fileID: 7400000, guid: 66258d6fe0f3e44baa769cd7ac75220f, type: 2}
-  m_ParentStateMachine: {fileID: 110700000}
-  m_Position: {x: 95, y: 377, z: 0}
-  m_IKOnFeet: 0
-  m_Mirror: 0
-  m_Tag: 
 --- !u!1107 &110700000
 StateMachine:
   serializedVersion: 2
@@ -380,12 +365,11 @@ StateMachine:
   - {fileID: 110206703}
   - {fileID: 110266845}
   - {fileID: 110209514}
-  - {fileID: 110287627}
   m_ChildStateMachine: []
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
     data:
-      first: {fileID: 110287627}
+      first: {fileID: 0}
       second: []
     data:
       first: {fileID: 110209514}
