@@ -381,7 +381,7 @@ AnimationClip:
   m_AnimationClipSettings:
     serializedVersion: 2
     m_StartTime: 0
-    m_StopTime: .566666663
+    m_StopTime: .5
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -1327,11 +1327,4 @@ AnimationClip:
     path: breakable-obstacle-1
     classID: 4
     script: {fileID: 0}
-  m_Events:
-  - time: .566666663
-    functionName: Destroy
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
+  m_Events: []

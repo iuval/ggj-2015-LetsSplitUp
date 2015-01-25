@@ -32,10 +32,12 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Vector2 pos = gameObject.transform.position;
-		pos.x += accel - WorldController.floorAccel + push;
-		gameObject.transform.position = pos;
-		push *= 0.8f;
+		if (WorldController.playing) {
+			Vector2 pos = gameObject.transform.position;
+			pos.x += accel - WorldController.floorAccel + push;
+			gameObject.transform.position = pos;
+			push *= 0.8f;
+		}
 	}
 
 	public void RunLeft() {
@@ -122,7 +124,7 @@ public class Player : MonoBehaviour {
 
 	public void KnockBack() {
 		Vector2 velo = gameObject.rigidbody2D.velocity;
-		velo.x = -5.75f;
+//		velo.x = -5.75f;
 		velo.y = WorldController.playerJumpSpeed * 1.15f;
 		gameObject.rigidbody2D.velocity = velo;
 	}

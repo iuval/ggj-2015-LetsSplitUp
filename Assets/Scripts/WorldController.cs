@@ -3,6 +3,10 @@ using System.Collections;
 
 public class WorldController : MonoBehaviour {
 
+	public static bool playing = false;
+
+	public Menu menu;
+
 	private AudioSource music;
 	public AudioClip normalMusic;
 	public AudioClip tensionMusic;
@@ -29,6 +33,7 @@ public class WorldController : MonoBehaviour {
 	
 	public ArrayList obstacle1Objects;
 	public ArrayList obstacle2Objects;
+	private float lastObstacleX = 0;
 	
 	public ArrayList obstacleObjectsToDestroy;
 	
@@ -43,8 +48,22 @@ public class WorldController : MonoBehaviour {
 
 
 	void Start () {
+		Reset ();
+
+		music = GetComponentInChildren <AudioSource> ();
+		music.clip = normalMusic;
+		music.Play ();
+	}
+	
+	public void Reset() {
+		lastObstacleX = 0;
+
+		player1.transform.position = new Vector3 (-8.830194f, 6.635736f, 0f);
 		player1.power = 1;
+		
+		player2.transform.position = new Vector3 (-9.438696f, -4.892966f, 0f);
 		player2.power = 0;
+		
 		ChannelingBar1.Hide();
 		ChannelingBar1.max = channelingTimeLimit;
 		ChannelingBar1.Reset();
@@ -52,26 +71,32 @@ public class WorldController : MonoBehaviour {
 		ChannelingBar2.max = channelingTimeLimit;
 		ChannelingBar2.Reset();
 
-		darkness.gameObject.transform.position = new Vector3 (-33.7f, 3.6f, 19f);
+		behindWalls[0].transform.position = new Vector3 (-11.40772f, 9.89f, 95f);
+		behindWalls[1].transform.position = new Vector3 (0f, -3f, 95f);
+		behindWalls[2].transform.position = new Vector3 (34.38498f, 9.89f, 95f);
+		behindWalls[3].transform.position = new Vector3 (45.82f, -3.005937f, 95f);
 
+		darkness.gameObject.transform.position = new Vector3 (-33.7f, 3.6f, 9f);
+
+		Obstacle[] obstacles = GetComponentsInChildren<Obstacle> ();
+		for (int i = 0; i < obstacles.Length; i ++) {
+			Destroy(obstacles[i].gameObject);
+		}
 		obstacle1Objects = new ArrayList();
 		obstacle2Objects = new ArrayList();
 		obstacleObjectsToDestroy = new ArrayList();
 		for (int i = 0; i < obstacleCount; i ++) {
 			AddObstacleToLevel (1);
 			AddObstacleToLevel (2);
-		}
-
-		music = GetComponentInChildren <AudioSource> ();
-		music.clip = normalMusic;
-		music.Play ();
+		}	
 	}
 
 	private void AddObstacleToLevel(int level) {
-		float x = GetNewXForObstacle(level);
+		float x = lastObstacleX + Random.Range(5, 15);
 		float y;
 
 		GameObject newObstacle;
+		Debug.Log ("CREATED NEW: " + x);
 		if (Random.Range(0f, 1f) < 0.5f) {
 			newObstacle = (GameObject)GameObject.Instantiate (breakableObstacles[Random.Range(0, breakableObstacles.Length)]);
 			if (level == 1) {	
@@ -91,6 +116,7 @@ public class WorldController : MonoBehaviour {
 		}
 		newObstacle.transform.parent = gameObject.transform;
 		newObstacle.transform.position = new Vector3 (x, y, 30);
+		lastObstacleX = x;
 	}
 
 	private float GetNewXForObstacle(int level) {
@@ -107,17 +133,25 @@ public class WorldController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		CheckForMovement ();
+		if (playing) {
+			CheckForMovement ();
 
-		CheckForAbilityUse ();
+			CheckForAbilityUse ();
 
-		if (darkness.isVisible) {
-			music.Stop();
-			music.clip = tensionMusic;
-			music.Play();
+			if (darkness.isVisible) {
+					music.Stop ();
+					music.clip = tensionMusic;
+					music.Play ();
+			}
+
+			if (darkness.transform.position.x >= 33.87) {
+				EndGame();
+			}
+
+			darknessSpeed += Time.deltaTime / 1000;
+		} else {
+
 		}
-
-		darknessSpeed += Time.deltaTime / 1000;
 	}
 
 	private void CheckForMovement() {
@@ -258,5 +292,17 @@ public class WorldController : MonoBehaviour {
 
 	private ArrayList ObstacleObjectsForLevel(int level) {
 		return level == 1 ? obstacle1Objects : obstacle2Objects;
+	}
+
+	public void StartGame() {
+		Reset ();
+		menu.Hide ();
+		playing = true;
+	}
+	
+	public void EndGame() {
+		playing = false;
+		menu.gameObject.SetActive(true);
+		menu.Show ();
 	}
 }

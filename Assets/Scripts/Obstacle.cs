@@ -14,10 +14,6 @@ public class Obstacle : MonoBehaviour {
 		}
 	}
 
-	void Update () {
-	
-	}
-
 	public bool IsOutside() {
 		return gameObject.transform.position.x < -WorldController.distanceToDestroyObstacle;
 	}
@@ -25,9 +21,5 @@ public class Obstacle : MonoBehaviour {
 	public void Hit (float height) {
 		GameObject.Instantiate (explotionPrefav, new Vector3(collider2D.bounds.center.x, height, 0), Quaternion.identity);
 		animator.SetTrigger ("Destroy");
-	}
-
-	public void Destroy(){
-		Destroy (gameObject);
 	}
 }

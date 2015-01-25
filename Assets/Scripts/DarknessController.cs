@@ -12,9 +12,11 @@ public class DarknessController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Vector3 pos = gameObject.transform.position;
-		pos.x += WorldController.darknessSpeed - WorldController.floorAccel;
-		gameObject.transform.position = pos;
+		if (WorldController.playing) {
+			Vector3 pos = gameObject.transform.position;
+			pos.x += WorldController.darknessSpeed - WorldController.floorAccel;
+			gameObject.transform.position = pos;
+		}
 	}
 	
 	public void OnCollisionEnter2D(Collision2D collision) {
