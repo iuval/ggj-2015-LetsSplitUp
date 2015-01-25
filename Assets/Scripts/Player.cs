@@ -22,6 +22,7 @@ public class Player : MonoBehaviour {
 
 	public CameraControl camera;
 	public GameObject PoofPrefav;
+	public GameObject JumpDustPrefav;
 
 	// Use this for initialization
 	void Start () {
@@ -85,6 +86,10 @@ public class Player : MonoBehaviour {
 					push = WorldController.playerSpeed * 2;
 				}
 				rigidbody2D.velocity = vel;
+
+				float dustX = transform.localScale.x == 1 ? collider2D.bounds.center.x - collider2D.bounds.size.x / 2 : collider2D.bounds.center.x + collider2D.bounds.size.x / 2;
+				GameObject dust = (GameObject)GameObject.Instantiate(JumpDustPrefav, new Vector3(dustX, collider2D.bounds.center.y - collider2D.bounds.size.y / 3, 0), Quaternion.identity);
+				dust.transform.localScale = transform.localScale;
 			}
 		} else {
 			if (canHitHard && obstacle && obstacle.destroyable) {
