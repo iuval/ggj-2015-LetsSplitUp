@@ -61,6 +61,9 @@ public class Player : MonoBehaviour {
 			animator.SetBool ("Jumping", false);
 		} else if (collision.gameObject.tag == "Obstacle") {
 			obstacle = collision.gameObject.GetComponent<Obstacle>();
+		} else if (collision.gameObject.tag == "Spikes") {
+			KnockBack();
+			animator.SetTrigger("Damage");
 		}
 	}
 	
@@ -115,5 +118,12 @@ public class Player : MonoBehaviour {
 			size *= 2;
 		}
 		box.size = size;
+	}
+
+	public void KnockBack() {
+		Vector2 velo = gameObject.rigidbody2D.velocity;
+		velo.x = -5.75f;
+		velo.y = WorldController.playerJumpSpeed * 1.15f;
+		gameObject.rigidbody2D.velocity = velo;
 	}
 }

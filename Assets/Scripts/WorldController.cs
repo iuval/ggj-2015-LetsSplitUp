@@ -79,6 +79,7 @@ public class WorldController : MonoBehaviour {
 			} else {	
 				y = 4f;
 			} 
+			obstacle1Objects.Add (newObstacle);
 		} else {
 			newObstacle = (GameObject)GameObject.Instantiate (jumpableObstacles[Random.Range(0, jumpableObstacles.Length)]);
 			if (level == 1) {	
@@ -86,15 +87,10 @@ public class WorldController : MonoBehaviour {
 			} else {	
 				y = 6.7f;
 			} 
-		}
-		newObstacle.transform.parent = gameObject.transform;
-		if (level == 1) {	
-			newObstacle.transform.position = new Vector3 (x, y, 30);
-			obstacle1Objects.Add (newObstacle);
-		} else {	
-			newObstacle.transform.position = new Vector3 (x, y, 30);
 			obstacle2Objects.Add (newObstacle);
 		}
+		newObstacle.transform.parent = gameObject.transform;
+		newObstacle.transform.position = new Vector3 (x, y, 30);
 	}
 
 	private float GetNewXForObstacle(int level) {
@@ -116,7 +112,6 @@ public class WorldController : MonoBehaviour {
 		CheckForAbilityUse ();
 
 		if (darkness.isVisible) {
-			Debug.Log ("RightWall");
 			music.Stop();
 			music.clip = tensionMusic;
 			music.Play();
