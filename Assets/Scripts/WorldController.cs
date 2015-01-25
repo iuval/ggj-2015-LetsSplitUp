@@ -11,7 +11,7 @@ public class WorldController : MonoBehaviour {
 	public Player player2;
 	public DarknessController darkness;
 
-	public static float darknessSpeed = 0.005f;
+	public static float darknessSpeed = 0.045f;
 	public static float floorAccel = 0;
 	public static int playersCountTouchingRightWall = 0;
 	private bool moveFloor = false;
