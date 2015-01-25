@@ -52,7 +52,7 @@ public class WorldController : MonoBehaviour {
 		ChannelingBar2.max = channelingTimeLimit;
 		ChannelingBar2.Reset();
 
-		darkness.gameObject.transform.position = new Vector3 (-42.7f, 3.6f, 19f);
+		darkness.gameObject.transform.position = new Vector3 (-33.7f, 3.6f, 19f);
 
 		obstacle1Objects = new ArrayList();
 		obstacle2Objects = new ArrayList();
