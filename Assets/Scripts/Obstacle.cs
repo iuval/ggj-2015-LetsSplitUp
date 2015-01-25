@@ -2,16 +2,25 @@
 using System.Collections;
 
 public class Obstacle : MonoBehaviour {
-	// Use this for initialization
+
+	public bool destroyable;
+	private Animator animator;
+
 	void Start () {
+		if (destroyable) {
+			animator = GetComponent <Animator> ();
+		}
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 	
 	}
 
 	public bool IsOutside() {
 		return gameObject.transform.position.x < -WorldController.distanceToDestroyObstacle;
+	}
+
+	public void Destory () {
+		animator.SetTrigger ("Destroy");
 	}
 }

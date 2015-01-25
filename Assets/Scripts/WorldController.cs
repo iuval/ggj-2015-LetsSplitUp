@@ -71,29 +71,29 @@ public class WorldController : MonoBehaviour {
 		float x = GetNewXForObstacle(level);
 		float y;
 
-		GameObject newFloor;
+		GameObject newObstacle;
 		if (Random.Range(0f, 1f) < 0.5f) {
-			newFloor = (GameObject)GameObject.Instantiate (breakableObstacles[Random.Range(0, breakableObstacles.Length)]);
+			newObstacle = (GameObject)GameObject.Instantiate (breakableObstacles[Random.Range(0, breakableObstacles.Length)]);
 			if (level == 1) {	
 				y = -8.8f;
 			} else {	
 				y = 4f;
 			} 
 		} else {
-			newFloor = (GameObject)GameObject.Instantiate (jumpableObstacles[Random.Range(0, jumpableObstacles.Length)]);
+			newObstacle = (GameObject)GameObject.Instantiate (jumpableObstacles[Random.Range(0, jumpableObstacles.Length)]);
 			if (level == 1) {	
 				y = -6.21f;
 			} else {	
 				y = 6.7f;
 			} 
 		}
-		newFloor.transform.parent = gameObject.transform;
+		newObstacle.transform.parent = gameObject.transform;
 		if (level == 1) {	
-			newFloor.transform.position = new Vector3 (x, y, 30);
-			obstacle1Objects.Add (newFloor);
+			newObstacle.transform.position = new Vector3 (x, y, 30);
+			obstacle1Objects.Add (newObstacle);
 		} else {	
-			newFloor.transform.position = new Vector3 (x, y, 30);
-			obstacle2Objects.Add (newFloor);
+			newObstacle.transform.position = new Vector3 (x, y, 30);
+			obstacle2Objects.Add (newObstacle);
 		}
 	}
 

@@ -18,7 +18,7 @@ public class Player : MonoBehaviour {
 
 	public bool wantsToChange = false;
 
-	private GameObject obstacle;
+	private Obstacle obstacle;
 
 	public CameraControl camera;
 
@@ -58,7 +58,7 @@ public class Player : MonoBehaviour {
 			touchingFloor = true;
 			animator.SetBool ("Jumping", false);
 		} else if (collision.gameObject.tag == "Obstacle") {
-			obstacle = collision.gameObject;
+			obstacle = collision.gameObject.GetComponent<Obstacle>();
 		}
 	}
 	
@@ -86,9 +86,9 @@ public class Player : MonoBehaviour {
 				rigidbody2D.velocity = vel;
 			}
 		} else {
-			if (canHitHard && obstacle) {
+			if (canHitHard && obstacle && obstacle.destroyable) {
 				animator.SetTrigger ("Hit");
-				Destroy (obstacle.collider2D);
+				obstacle.Destory();
 				camera.Shake ();
 			}
 		}

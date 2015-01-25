@@ -27,6 +27,7 @@ GameObject:
   - 50: {fileID: 5000000}
   - 114: {fileID: 11400000}
   - 60: {fileID: 6000000}
+  - 95: {fileID: 9500000}
   m_Layer: 0
   m_Name: ObstacleB1
   m_TagString: Obstacle
@@ -41,7 +42,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -.379999995, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1.92705393, y: 1.92705417, z: 2.30406594}
   m_Children: []
   m_Father: {fileID: 400002}
@@ -53,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 38.0928535, y: 4, z: 40}
+  m_LocalPosition: {x: -11.9796276, y: 32.3039856, z: 40}
   m_LocalScale: {x: 1.19564152, y: 1.19564152, z: 1}
   m_Children:
   - {fileID: 400000}
@@ -89,6 +90,21 @@ PolygonCollider2D:
       - {x: 1.37016165, y: 6.69387197}
       - {x: -1.74604547, y: 3.66940808}
       - {x: -2.3805871, y: .180440456}
+--- !u!95 &9500000
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 40419c0b751cb4b3b824d4c767afaa92, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -100,6 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 808bbddd2f6784d3a8e756090e7462d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyable: 1
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
