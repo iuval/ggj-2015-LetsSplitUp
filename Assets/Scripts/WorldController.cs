@@ -3,11 +3,15 @@ using System.Collections;
 
 public class WorldController : MonoBehaviour {
 
+	private AudioSource music;
+	public AudioClip normalMusic;
+	public AudioClip tensionMusic;
+
 	public Player player1;
 	public Player player2;
-	public GameObject darkness;
-	private float badGuySpeed = 0.005f;
+	public DarknessController darkness;
 
+	public static float darknessSpeed = 0.005f;
 	public static float floorAccel = 0;
 	public static int playersCountTouchingRightWall = 0;
 	private bool moveFloor = false;
@@ -48,7 +52,7 @@ public class WorldController : MonoBehaviour {
 		ChannelingBar2.max = channelingTimeLimit;
 		ChannelingBar2.Reset();
 
-		darkness.transform.position = new Vector3 (-42.7f, 3.6f, 19f);
+		darkness.gameObject.transform.position = new Vector3 (-42.7f, 3.6f, 19f);
 
 		obstacle1Objects = new ArrayList();
 		obstacle2Objects = new ArrayList();
@@ -57,6 +61,10 @@ public class WorldController : MonoBehaviour {
 			AddObstacleToLevel (1);
 			AddObstacleToLevel (2);
 		}
+
+		music = GetComponentInChildren <AudioSource> ();
+		music.clip = normalMusic;
+		music.Play ();
 	}
 
 	private void AddObstacleToLevel(int level) {
@@ -107,11 +115,14 @@ public class WorldController : MonoBehaviour {
 
 		CheckForAbilityUse ();
 
-		Vector3 pos = darkness.transform.position;
-		pos.x += badGuySpeed - WorldController.floorAccel;
-		darkness.transform.position = pos;
+		if (darkness.isVisible) {
+			Debug.Log ("RightWall");
+			music.Stop();
+			music.clip = tensionMusic;
+			music.Play();
+		}
 
-		badGuySpeed += Time.deltaTime / 1000;
+		darknessSpeed += Time.deltaTime / 1000;
 	}
 
 	private void CheckForMovement() {
@@ -130,8 +141,6 @@ public class WorldController : MonoBehaviour {
 		else if (player1.accel < 0) player1.RunLeft ();
 		else player1.Stand ();
 
-		if (Input.GetKeyDown("up")) player1.Jump();
-		
 		if (Input.GetKey("a")) player2.accel -= playerSpeed;
 		if (Input.GetKey("d")) {
 			player2.accel += playerSpeed;
@@ -141,10 +150,6 @@ public class WorldController : MonoBehaviour {
 		else if (player2.accel < 0) player2.RunLeft ();
 		else player2.Stand ();
 
-		if (Input.GetKeyDown("w")) {
-			player2.Jump();
-		}
-		
 		if (moveFloor && !((player1.touchingLeftWall && player2.touchingRightWall) || (player1.touchingRightWall && player2.touchingLeftWall))) {
 			floorAccel = playerSpeed;
 			MoveMovables(1);
@@ -155,15 +160,15 @@ public class WorldController : MonoBehaviour {
 	}
 
 	private void CheckForAbilityUse() {	
-		if (Input.GetKeyDown ("o")) {
-			player1.Hit();
+		if (Input.GetKeyDown ("up")) {
+			player1.Action();
 			player1.wantsToChange = false;
 			ChannelingBar1.Hide ();
 			ChannelingBar2.Hide ();
 		}
 		
-		if (Input.GetKeyDown ("c")) {
-			player2.Hit();
+		if (Input.GetKeyDown ("w")) {
+			player2.Action();
 			player2.wantsToChange = false;
 			ChannelingBar1.Hide ();
 			ChannelingBar2.Hide ();
@@ -179,15 +184,14 @@ public class WorldController : MonoBehaviour {
 				ChannelingBar2.Hide ();
 			}
 
-			if (Input.GetKeyDown ("v")) {
+			if (Input.GetKeyDown ("c")) {
 				player2.wantsToChange = true;
 				channelingTime = 0;
-			} else if (Input.GetKeyUp ("v")) {
+			} else if (Input.GetKeyUp ("c")) {
 				player2.wantsToChange = false;
 				ChannelingBar1.Hide ();
 				ChannelingBar2.Hide ();
 			}
-
 
 			if (player1.wantsToChange && player2.wantsToChange) {
 				if (channelingTime == 0) {
@@ -203,10 +207,8 @@ public class WorldController : MonoBehaviour {
 				if (channelingTime >= channelingTimeLimit) {
 					channelingTime = 0;
 
-					player1.canHitHard = !player1.canHitHard;
-					player1.canJumpHigh = !player1.canJumpHigh;
-					player2.canHitHard = !player2.canHitHard;
-					player2.canJumpHigh = !player2.canJumpHigh;
+					player1.ChangePowers();
+					player2.ChangePowers();
 					player1.wantsToChange = false;
 					player2.wantsToChange = false;
 

@@ -32,7 +32,7 @@ public class Player : MonoBehaviour {
 		Vector2 pos = gameObject.transform.position;
 		pos.x += accel - WorldController.floorAccel + push;
 		gameObject.transform.position = pos;
-		push = 0;
+		push *= 0.8f;
 	}
 
 	public void RunLeft() {
@@ -74,25 +74,38 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	public void Jump() {
-		if (touchingFloor) {
-			animator.SetBool ("Jumping", true);
-			Vector2 vel = rigidbody2D.velocity;
-			if (canJumpHigh) {
-				vel.y += WorldController.playerJumpSpeed * 1.8f;
-				push = WorldController.playerSpeed;
-			} else {
-				vel.y += WorldController.playerJumpSpeed;
+	public void Action() {
+		if (canJumpHigh) {
+			if (touchingFloor) {
+				Vector2 vel = rigidbody2D.velocity;
+				if (canJumpHigh) {
+					animator.SetBool ("Jumping", true);
+					vel.y += WorldController.playerJumpSpeed * 1.5f;
+					push = WorldController.playerSpeed * 2;
+				}
+				rigidbody2D.velocity = vel;
 			}
-			rigidbody2D.velocity = vel;
+		} else {
+			if (canHitHard && obstacle) {
+				animator.SetTrigger ("Hit");
+				Destroy (obstacle.collider2D);
+				camera.Shake ();
+			}
 		}
 	}
 
-	public void Hit() {
-		if (canHitHard && obstacle) {
-			animator.SetTrigger ("Hit");
-			Destroy(obstacle.collider2D);
-			camera.Shake();
+	public void ChangePowers() {
+		canHitHard = !canHitHard;
+		canJumpHigh = !canJumpHigh;
+		animator.SetTrigger ("Switch");
+
+		BoxCollider2D box = GetComponent<BoxCollider2D> ();
+		Vector3 size = box.size;
+		if (canHitHard) {
+			size /= 2;
+		} else {
+			size *= 2;
 		}
+		box.size = size;
 	}
 }

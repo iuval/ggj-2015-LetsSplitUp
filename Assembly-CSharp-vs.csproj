@@ -46,9 +46,10 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\CameraControl.cs" />
-     <Compile Include="Assets\ChannelingBar.cs" />
-     <Compile Include="Assets\CooldownClock.cs" />
+     <Compile Include="Assets\Scripts\CameraControl.cs" />
+     <Compile Include="Assets\Scripts\ChannelingBar.cs" />
+     <Compile Include="Assets\Scripts\CooldownClock.cs" />
+     <Compile Include="Assets\Scripts\DarknessController.cs" />
      <Compile Include="Assets\Scripts\Obstacle.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\WorldController.cs" />

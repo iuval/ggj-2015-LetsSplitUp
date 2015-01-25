@@ -1410,6 +1410,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1691644518}
   - 114: {fileID: 1691644519}
+  - 82: {fileID: 1691644520}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -1449,9 +1450,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57b3ce49be29a4ef6961ca32cd863e91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normalMusic: {fileID: 8300000, guid: c101cf7f47d6e4bc6b3b0b22d5969850, type: 3}
+  tensionMusic: {fileID: 8300000, guid: 66b7306bb8250483da41db2ad93b202f, type: 3}
   player1: {fileID: 1321096075}
   player2: {fileID: 2132230092}
-  darkness: {fileID: 1876685377}
+  darkness: {fileID: 1876685382}
   obstacleCount: 3
   breakableObstacles:
   - {fileID: 100002, guid: 29346a53d13e44f76b961ae00ca4c3bb, type: 2}
@@ -1473,6 +1476,64 @@ MonoBehaviour:
   cooldownClock: {fileID: 1315864277}
   cooldownTime: 3
   cooldownTimeLimit: 3
+--- !u!82 &1691644520
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1691644517}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: c101cf7f47d6e4bc6b3b0b22d5969850, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1001 &1715063406
 Prefab:
   m_ObjectHideFlags: 0
@@ -1746,6 +1807,7 @@ GameObject:
   - 61: {fileID: 1876685379}
   - 212: {fileID: 1876685381}
   - 95: {fileID: 1876685380}
+  - 114: {fileID: 1876685382}
   m_Layer: 0
   m_Name: Darkness
   m_TagString: Untagged
@@ -1774,8 +1836,8 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Size: {x: 1, y: 10.5100002}
-  m_Center: {x: 3.8900001, y: 0}
+  m_Size: {x: 12.3500004, y: 10.5100002}
+  m_Center: {x: -1.91999996, y: 0}
 --- !u!95 &1876685380
 Animator:
   serializedVersion: 3
@@ -1813,6 +1875,18 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c9103106865a640c0b9e635f26d95e0b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1876685382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1876685377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6856209cf80714261b07854c661c0eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isVisible: 0
 --- !u!1 &1891727372
 GameObject:
   m_ObjectHideFlags: 0
